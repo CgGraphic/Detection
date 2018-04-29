@@ -18,6 +18,7 @@
 x64/
 x86/
 !3rdparty/
+!3rdparty/**
 !build/
 !build/darknet/x64/*.cmd
 !build/darknet/x64/*.cfg
