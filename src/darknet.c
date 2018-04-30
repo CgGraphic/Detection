@@ -379,9 +379,16 @@ int main(int argc, char **argv)
     }
 #endif
 
-	if(0 == strcmp(argv[1], "average"))
+	if(0 == strcmp(argv[1], "zed_vis"))
 	{ 
-		visializer(argc, argv);
+		if(argc == 2)
+			visializer(argc - 1, argv);
+		else {
+			char* new_argv[2];
+			new_argv[0] = argv[0];
+			new_argv[1] = argv[2];
+			visializer(2, new_argv);
+		}
 	}
 	else if (0 == strcmp(argv[1], "average")){
         average(argc, argv);

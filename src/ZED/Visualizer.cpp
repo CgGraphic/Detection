@@ -81,14 +81,13 @@ namespace Depth
 				// Retrieve a depth map corresponding to left image.			
 				zed.retrieveMeasure(left_depth, MEASURE_DEPTH, MEM_GPU, width, height);
 
-				////TODO: Extract depth regions of objects and get space places.
+				////TODO: Extract depth regions of objects and get corresponding space locations.
 
-				// Retrieve point cloud in GPU memory and update GL viewing window
+				// Retrieve a colored RGBA point cloud in GPU memory and update GL viewing window
 				// width and height specify the total number of columns and rows for the point cloud dataset
-				// In this example, we retrieve and display a full size point cloud using width and height parameters
-				zed.retrieveMeasure(point_cloud, MEASURE_DEPTH, MEM_GPU, width, height);
+				// In this example, we retrieve and display a half size point cloud using width and height parameters
+				zed.retrieveMeasure(point_cloud, MEASURE_XYZRGBA, MEM_GPU, width, height);
 				viewer.updatePointCloud(point_cloud);
-
 			}
 			else sl::sleep_ms(1);
 		}
@@ -137,8 +136,8 @@ int visializer(int argc, char **argv) {
 	}
 
 	// Initialize point cloud viewer in full size
-	width = (int)zed.getResolution().width;
-	height = (int)zed.getResolution().height;
+	width = (int)zed.getResolution().width / 2;
+	height = (int)zed.getResolution().height / 2;
 	viewer.init(width, height);
 
 	// Start the camera thread
