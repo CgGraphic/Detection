@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4CF5694F-12A5-4012-8D94-9A0915E9FEB5}</ProjectGuid>
     <RootNamespace>darknet</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -33,8 +33,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -69,7 +69,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
-    <LibraryWPath>$(WindowsSDK_MetadataPath);C:\Users\Kun\Documents\GitHub\Detection\build\darknet\x64\dll</LibraryWPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
@@ -89,16 +88,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\ZED SDK\dependencies\freeglut_2.8\include;C:\Program Files (x86)\ZED SDK\dependencies\glew-1.12.0\include;C:\Program Files (x86)\ZED SDK\include;C:\Program Files %28x86%29\ZED SDK\dependencies\opencv_3.1.0\include;..\..\3rdparty\include;%(AdditionalIncludeDirectories);$(CudaToolkitIncludeDir);$(cudnn)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\ZED SDK\dependencies\freeglut_2.8\include;C:\Program Files (x86)\ZED SDK\dependencies\glew-1.12.0\include;C:\Program Files (x86)\ZED SDK\include;F:\OpenCV_2_4_9\opencv\build\include;..\..\3rdparty\include;%(AdditionalIncludeDirectories);$(CudaToolkitIncludeDir);$(cudnn)\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;OPENCV;_TIMESPEC_DEFINED;_CRT_SECURE_NO_WARNINGS;GPU;WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UndefinePreprocessorDefinitions>CUDNN</UndefinePreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:/Program Files (x86)/ZED SDK/lib/$(Configuration);C:/Program Files (x86)/ZED SDK/lib;C:\Program Files (x86)\ZED SDK\dependencies\freeglut_2.8\x64;C:\Program Files (x86)\ZED SDK\dependencies\glew-1.12.0\x64;C:\Program Files (x86)\ZED SDK\dependencies\opencv_3.1.0\x64\vc14\lib;$(CUDA_PATH)lib\$(PlatformName);$(cudnn)\lib\x64;C:\Users\Kun\Documents\GitHub\Detection\build\darknet\x64\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:/Program Files (x86)/ZED SDK/lib/$(Configuration);C:/Program Files (x86)/ZED SDK/lib;C:\Program Files (x86)\ZED SDK\dependencies\freeglut_2.8\x64;C:\Program Files (x86)\ZED SDK\dependencies\glew-1.12.0\x64;F:\OpenCV_2_4_9\opencv\build\lib\Debug;$(CUDA_PATH)lib\$(PlatformName);$(cudnn)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)\$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalDependencies>C:\Program Files (x86)\ZED SDK\dependencies\glew-1.12.0\x64\glew32.lib;C:\Program Files (x86)\ZED SDK\lib\sl_zed64.lib;C:\Program Files (x86)\ZED SDK\lib\sl_input64.lib;C:\Program Files (x86)\ZED SDK\lib\sl_core64.lib;..\..\3rdparty\lib\x64\pthreadVC2.lib;cublas.lib;curand.lib;cudart.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.1\lib\x64\cuda.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.1\lib\x64\cudart.lib;C:\Program Files (x86)\ZED SDK\dependencies\opencv_3.1.0\x64\vc14\lib\opencv_world310d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Program Files (x86)\ZED SDK\dependencies\glew-1.12.0\x64\glew32.lib;C:\Program Files (x86)\ZED SDK\lib\sl_zed64.lib;C:\Program Files (x86)\ZED SDK\lib\sl_input64.lib;C:\Program Files (x86)\ZED SDK\lib\sl_core64.lib;..\..\3rdparty\lib\x64\pthreadVC2.lib;cublas.lib;curand.lib;cudart.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.1\lib\x64\cuda.lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.1\lib\x64\cudart.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <CudaCompile>
@@ -354,6 +353,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\ZED\GLViewer.cpp" />
     <ClCompile Include="..\..\src\ZED\Visualizer.cpp" />
+    <ClCompile Include="..\..\src\ZED\ZEDDetector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\activations.h" />
@@ -381,6 +381,7 @@
     <ClInclude Include="..\..\src\gru_layer.h" />
     <ClInclude Include="..\..\src\im2col.h" />
     <ClInclude Include="..\..\src\image.h" />
+    <ClInclude Include="..\..\src\image_utils.h" />
     <ClInclude Include="..\..\src\layer.h" />
     <ClInclude Include="..\..\src\list.h" />
     <ClInclude Include="..\..\src\local_layer.h" />
@@ -401,6 +402,7 @@
     <ClInclude Include="..\..\src\tree.h" />
     <ClInclude Include="..\..\src\unistd.h" />
     <ClInclude Include="..\..\src\utils.h" />
+    <ClInclude Include="..\..\src\YOLO_Header.h" />
     <ClInclude Include="..\..\src\ZED\GLViewer.hpp" />
     <ClInclude Include="..\..\src\ZED\Visualizer.h" />
     <ClInclude Include="..\..\src\ZED\ZED_Preinclude.h" />

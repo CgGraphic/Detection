@@ -31,9 +31,11 @@
 
 // ZED includes
 #include <sl_zed/Camera.hpp>
+#include <opencv2\opencv.hpp>
 
 // Sample includes
 #include "GLViewer.hpp"
+#include "Visualizer.h"
 
 namespace Depth
 {
@@ -147,6 +149,72 @@ int visializer(int argc, char **argv) {
 	glutCloseFunc(close);
 	glutMainLoop();
 	return 0;
+}
+int Initialize_ZED(int argc, char ** argv)
+{
+	InitParameters initParameters;
+	if (argc == 2) initParameters.svo_input_filename = argv[1];
+	initParameters.camera_resolution = RESOLUTION_HD720;
+	initParameters.depth_mode = DEPTH_MODE_PERFORMANCE;
+	initParameters.coordinate_system = COORDINATE_SYSTEM_RIGHT_HANDED_Y_UP; // OpenGL's coordinate system is right_handed
+	initParameters.coordinate_units = UNIT_METER;
+
+	// Open the camera
+	ERROR_CODE err = zed.open(initParameters);
+	if (err != SUCCESS) {
+		cout << toString(err) << endl;
+		zed.close();
+		viewer.exit();
+		return 1; // Quit if an error occurred
+	}
+
+	// Initialize point cloud viewer in full size
+	width = (int)zed.getResolution().width / 2;
+	height = (int)zed.getResolution().height / 2;
+	viewer.init(width, height);
+}
+
+cv::Mat slMat2cvMat(Mat& input) {
+	// Mapping between MAT_TYPE and CV_TYPE
+	int cv_type = -1;
+	switch (input.getDataType()) {
+	case MAT_TYPE_32F_C1: cv_type = CV_32FC1; break;
+	case MAT_TYPE_32F_C2: cv_type = CV_32FC2; break;
+	case MAT_TYPE_32F_C3: cv_type = CV_32FC3; break;
+	case MAT_TYPE_32F_C4: cv_type = CV_32FC4; break;
+	case MAT_TYPE_8U_C1: cv_type = CV_8UC1; break;
+	case MAT_TYPE_8U_C2: cv_type = CV_8UC2; break;
+	case MAT_TYPE_8U_C3: cv_type = CV_8UC3; break;
+	case MAT_TYPE_8U_C4: cv_type = CV_8UC4; break;
+	default: break;
+	}
+
+	// Since cv::Mat data requires a uchar* pointer, we get the uchar1 pointer from sl::Mat (getPtr<T>())
+	// cv::Mat and sl::Mat will share a single memory structure
+	return cv::Mat(input.getHeight(), input.getWidth(), cv_type, input.getPtr<sl::uchar1>(MEM_CPU));
+}
+
+IplImage GetOneFrame()
+{
+	if (zed.grab() == SUCCESS) {
+		// Retrieve a colored RGB left image in GPU memory for object recognition.
+		zed.retrieveImage(left_image, VIEW_LEFT, MEM_GPU, width, height);
+		////TODO: recognize objects and output rectangles of object regions.
+
+		// Retrieve a depth map corresponding to left image.			
+		zed.retrieveMeasure(left_depth, MEASURE_DEPTH, MEM_GPU, width, height);
+
+		////TODO: Extract depth regions of objects and get corresponding space locations.
+
+		// Retrieve a colored RGBA point cloud in GPU memory and update GL viewing window
+		// width and height specify the total number of columns and rows for the point cloud dataset
+		// In this example, we retrieve and display a half size point cloud using width and height parameters
+		zed.retrieveMeasure(point_cloud, MEASURE_XYZRGBA, MEM_GPU, width, height);
+
+		cv::Mat color_image = slMat2cvMat(left_image);
+		return color_image;
+	}
+
 }
 #ifdef __cplusplus
 }

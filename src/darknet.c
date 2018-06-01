@@ -11,6 +11,7 @@
 #include "blas.h"
 #include "connected_layer.h"
 #include "ZED\ZED_Preinclude.h"
+#include "YOLO_Header.h"
 
 #ifdef OPENCV
 #include "opencv2/highgui/highgui_c.h"
@@ -18,25 +19,7 @@
 
 
 
-	extern void predict_classifier(char *datacfg, char *cfgfile, char *weightfile, char *filename, int top);
-	extern void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh);
-	extern void run_voxel(int argc, char **argv);
-	extern void run_yolo(int argc, char **argv);
-	extern void run_detector(int argc, char **argv);
-	extern void run_coco(int argc, char **argv);
-	extern void run_writing(int argc, char **argv);
-	extern void run_captcha(int argc, char **argv);
-	extern void run_nightmare(int argc, char **argv);
-	extern void run_dice(int argc, char **argv);
-	extern void run_compare(int argc, char **argv);
-	extern void run_classifier(int argc, char **argv);
-	extern void run_char_rnn(int argc, char **argv);
-	extern void run_vid_rnn(int argc, char **argv);
-	extern void run_tag(int argc, char **argv);
-	extern void run_cifar(int argc, char **argv);
-	extern void run_go(int argc, char **argv);
-	extern void run_art(int argc, char **argv);
-	extern void run_super(int argc, char **argv);
+
 
 
 
@@ -390,6 +373,17 @@ int main(int argc, char **argv)
 			visializer(2, new_argv);
 		}
 	}
+	else if (0 == strcmp(argv[1], "zed_object_test"))
+	{
+		//char* new_argv[2];
+		//new_argv[0] = argv[0];
+		//new_argv[1] = argv[2];
+		//Initialize_ZED(2, new_argv);
+
+		//IplImage one_frame = GetOneFrame();
+		//printf("%d %d", one_frame.height, one_frame.width);
+		Detector_ZED(argc, argv);
+	}
 	else if (0 == strcmp(argv[1], "average")){
         average(argc, argv);
     } else if (0 == strcmp(argv[1], "yolo")){
@@ -465,6 +459,7 @@ int main(int argc, char **argv)
     } else {
         fprintf(stderr, "Not an option: %s\n", argv[1]);
     }
+	system("pause");
     return 0;
 }
 

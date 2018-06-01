@@ -81,6 +81,9 @@
     <ClCompile Include="..\..\src\ZED\Visualizer.cpp">
       <Filter>ZED</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ZED\ZEDDetector.cpp">
+      <Filter>ZED</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\activations.h" />
@@ -137,6 +140,8 @@
     <ClInclude Include="..\..\src\ZED\Visualizer.h">
       <Filter>ZED</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\YOLO_Header.h" />
+    <ClInclude Include="..\..\src\image_utils.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ZED">
